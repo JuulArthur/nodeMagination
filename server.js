@@ -4,12 +4,29 @@ var app            = express();
 var mongoose       = require('mongoose');
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
+var express  = require('express');
+var passport = require('passport');
+var flash 	 = require('connect-flash');
+
+var morgan       = require('morgan');
+var cookieParser = require('cookie-parser');
+var session      = require('express-session');
 
 // configuration ===========================================
 	
 // config files
-var db = require('./config/db');
 mongoose.connect('mongodb://127.0.0.1:27017/');
+
+// set up our express application
+app.use(morgan('dev')); // log every request to the console
+app.use(cookieParser()); // read cookies (needed for auth)
+
+
+// required for passport
+app.use(session({ secret: 'detteerenlitenhemmelighetsombarejegvet' })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
 
 var port = process.env.PORT || 8080; // set our port
 // mongoose.connect(db.url); // connect to our mongoDB database (commented out after you enter in your own credentials)

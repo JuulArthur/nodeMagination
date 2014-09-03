@@ -1,7 +1,9 @@
 module.exports = function(app) {
 
+    var express        = require('express');
     var router = express.Router();
     var port = process.env.PORT || 8080;
+    var Nerd = require('./models/Nerd');
 
 	// server routes ===========================================================
 	// handle things like api calls
@@ -12,67 +14,67 @@ module.exports = function(app) {
         res.json({message: 'hooray! Welcome to my domain'});
     });
 
-    router.route('/bears')
+    router.route('/nerds')
 
         .post(function (req, res) {
-            var bear = new Bear();
-            bear.name = req.body.name;
+            var nerd = new Nerd();
+            nerd.name = req.body.name;
 
-            bear.save(function (err) {
+            nerd.save(function (err) {
                 if (err) {
                     res.send(err);
                 }
 
-                res.json({ message: 'Bear created' });
+                res.json({ message: 'Nerd created' });
             });
         })
 
         .get(function(req, res) {
-            Bear.find(function(err, bears) {
+            Nerd.find(function(err, nerds) {
                 if (err) {
                     res.send(err);
                 }
 
-                res.json(bears);
+                res.json(nerds);
             });
         });
 
-    router.route('/bears/:bear_id')
+    router.route('/nerds/:nerd_id')
 
         .get(function(req, res) {
-            Bear.findById(req.params.bear_id, function(err, bear) {
+            Nerd.findById(req.params.nerd_id, function(err, nerd) {
                 if (err) {
                     res.send(err);
                 }
 
-                res.json(bear);
+                res.json(nerd);
             });
         })
 
         .put(function(req, res) {
-            Bear.findById(req.params.bear_id, function(err, bear) {
+            Nerd.findById(req.params.nerd_id, function(err, nerd) {
 
                 if (err) {
                     res.send(err);
                 }
 
-                bear.name = req.body.name;
+                nerd.name = req.body.name;
 
-                bear.save(function(err) {
+                nerd.save(function(err) {
 
                     if (err) {
                         res.send(err);
                     }
 
-                    res.json({ message: 'Bear updated!' });
+                    res.json({ message: 'Nerd updated!' });
                 });
             });
         })
 
         .delete(function(req, res) {
-            Bear.remove({
-                _id: req.params.bear_id
-            }, function (err, bear) {
+            Nerd.remove({
+                _id: req.params.nerd_id
+            }, function (err, nerd) {
                 if (err) {
                     res.send(err);
                 }
