@@ -2,15 +2,20 @@
 var express        = require('express');
 var app            = express();
 var mongoose       = require('mongoose');
-var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-var express  = require('express');
-var passport = require('passport');
-var flash 	 = require('connect-flash');
+var express        = require('express');
+var passport       = require('passport');
+var flash 	       = require('connect-flash');
+var morgan         = require('morgan');
 
-var morgan       = require('morgan');
-var cookieParser = require('cookie-parser');
-var session      = require('express-session');
+// required for passport
+var bodyParser     = require('body-parser');
+var cookieParser   = require('cookie-parser');
+var session        = require('express-session');
+
+var Nerd = require('./models/Nerd');
+var User = require('./models/User');
+
 
 // configuration ===========================================
 	
@@ -22,14 +27,13 @@ app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 
 
-// required for passport
-app.use(session({ secret: 'detteerenlitenhemmelighetsombarejegvet' })); // session secret
+// required for passport, and
+app.use(session({ secret: process.env.SESSION_SECRET || 'detteerenlitenhemmelighetsombarejegvet' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
 var port = process.env.PORT || 8080; // set our port
-// mongoose.connect(db.url); // connect to our mongoDB database (commented out after you enter in your own credentials)
 
 // get all data/stuff of the body (POST) parameters
 app.use(bodyParser.json()); // parse application/json 
@@ -39,8 +43,12 @@ app.use(bodyParser.urlencoded({ extended: true })); // parse application/x-www-f
 app.use(methodOverride('X-HTTP-Method-Override')); // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
 app.use(express.static(__dirname + '/public')); // set the static files location /public/img will be /img for users
 
+// passportSettings
+require('./auth')(passport, User);
+
 // routes ==================================================
-require('./app/routes')(app); // pass our application into our routes
+//require('./app/routes')(app); // pass our application into our routes
+require('./routes')(app, express, Nerd, User, passport);
 
 // start app ===============================================
 app.listen(port);	

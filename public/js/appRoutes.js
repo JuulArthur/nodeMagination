@@ -18,6 +18,16 @@ angular.module('appRoutes', []).config(['$routeProvider', '$locationProvider', f
 			controller: 'GeekController'	
 		})
 
+        .when('/pages/login', {
+            templateUrl: 'views/login.html',
+            controller: 'LoginController'
+        })
+
+        .when('/pages/signup', {
+            templateUrl: 'views/signup.html',
+            controller: 'SignupController'
+        })
+
         .otherwise({
             templateUrl: 'views/home.html',
             controller: 'MainController'
