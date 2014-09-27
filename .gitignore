@@ -14,9 +14,11 @@ results
 npm-debug.log
 node_modules
 
-public/libs
+libs
 
 *.0
 *.ns
 
-src/backend/db
+src/db
+
+dist

@@ -6,31 +6,18 @@ var clean       = require('gulp-clean');
 var runSequence = require('run-sequence');
 
 
-var srcDirBackend = 'src/backend/**/*.js';
-var srcDirFrontend = 'src/public/js/**/*.js';
+var srcDirJs = 'src/**/*.js';
 var distDir = 'dist/';
-var srcStaticFiles = [
-    'src/public/css/*',
-    'src/public/views/*',
-    'src/public/index.html'
-];
+var srcStaticFiles = ['src/**/*.html', 'src/**/*.css'];
 
 gulp.task('server', function () {
     server.run({
-        file: distDir + 'backend/server.js'
+        file: distDir + 'server.js'
     });
 });
 
-gulp.task('compilebackend', function () {
-    return gulp.src(srcDirBackend, {base: './src/'})
-        .pipe(sourcemaps.init())
-        .pipe(traceur())
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(distDir));
-});
-
-gulp.task('compilefrontend', function () {
-    return gulp.src(srcDirFrontend, {base: './src/'})
+gulp.task('compileJs', function () {
+    return gulp.src(srcDirJs, {base: './src/'})
         .pipe(sourcemaps.init())
         .pipe(traceur())
         .pipe(sourcemaps.write())
@@ -50,9 +37,9 @@ gulp.task('clean', function () {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(srcDirBackend, runSequence('compilebackend','server'));
-    gulp.watch(srcDirFrontend, runSequence('compilefrontend','server'));
+    gulp.watch(srcDirJs, runSequence('compileJs','server'));
+    gulp.watch(srcStaticFiles, runSequence('moveStaticFiles','server'));
 
 });
 
-gulp.task('default', runSequence('clean','compilebackend', 'compilefrontend', 'moveStaticFiles', 'server', 'watch'));
+gulp.task('default', runSequence('compileJs', 'moveStaticFiles', 'server', 'watch'));

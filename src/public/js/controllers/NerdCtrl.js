@@ -1,12 +1,12 @@
-angular.module('MainCtrl').controller('NerdController', function($scope, $http) {
+angular.module('MainCtrl').controller('NerdController', ($scope, $http) => {
 
 	$scope.tagline = 'Nothing beats a pocket protector!';
 
      $http({method: 'GET', url: 'http://localhost:8080/api/nerds'}).
-        success(function(data, status, headers, config) {
+        success((data, status, headers, config) => {
              $scope.nerds = data[0].name
         }).
-        error(function(data, status, headers, config) {
+        error((data, status, headers, config) => {
              $scope.nerds = data
         });
 
