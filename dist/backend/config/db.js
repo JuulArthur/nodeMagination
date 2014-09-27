@@ -1,0 +1,4 @@
+"use strict";
+module.exports = {url: 'mongodb://<user>:<pass>@mongo.onmodulus.net:27017/uw45mypu'};
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImJhY2tlbmQvY29uZmlnL2RiLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FBQUEsS0FBSyxRQUFRLEVBQUksRUFDaEIsR0FBRSxDQUFJLDZEQUEyRCxDQUNsRSxDQUFBO0FBQUEiLCJmaWxlIjoiYmFja2VuZC9jb25maWcvZGIuanMiLCJzb3VyY2VSb290IjoiLi4vLi4iLCJzb3VyY2VzQ29udGVudCI6WyJtb2R1bGUuZXhwb3J0cyA9IHtcblx0dXJsIDogJ21vbmdvZGI6Ly88dXNlcj46PHBhc3M+QG1vbmdvLm9ubW9kdWx1cy5uZXQ6MjcwMTcvdXc0NW15cHUnXG59Il19
