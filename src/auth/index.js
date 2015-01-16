@@ -49,8 +49,8 @@ exports = module.exports = function (passport, User) {
         done(null, user.email);
     });
 
-    passport.deserializeUser(function (user, done) {
-        User.findOne({ 'email' :  user.email }, function (err, user) {
+    passport.deserializeUser(function (email, done) {
+        User.findOne({ 'email' :  email }, function (err, user) {
             if (err) return done(err);
 
             done(null, { id: user.id, email: user.email, password: user.password })

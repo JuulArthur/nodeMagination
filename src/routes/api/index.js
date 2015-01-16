@@ -110,18 +110,24 @@ module.exports = function(app, express, Nerd, User, passport) {
 
     router.route('/login')
 
-     .post(function(req, res, next) {
-            passport.authenticate('local-login', function(err, user, info) {
-                if (err) { return res.json({ error : false }); }
-                if (!user) { return res.json({ authentication_success : false }); }
+        .post(function (req, res, next) {
+            passport.authenticate('local-login', function (err, user, info) {
+                if (err) {
+                    return res.json({ error: false });
+                }
+                if (!user) {
+                    return res.json({ authentication_success: false });
+                }
                 console.log(user);
                 console.log(req.logIn);
-                req.login(user, function(err, result) {
-                    if (err) { return next(err); }
-                    return res.json({ authentication_success : true });
+                req.login(user, function (err, result) {
+                    if (err) {
+                        return next(err);
+                    }
+                    return res.json({ authentication_success: true });
                 });
             })(req, res, next);
-        })
+        });
 
     router.route('/isAuthenticated')
 
